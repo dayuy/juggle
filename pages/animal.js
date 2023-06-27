@@ -3,18 +3,18 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [SentenceInput, setSentenceInput] = useState("");
+  const [animalInput, setAnimalInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
     event.preventDefault();
     try {
-      const response = await fetch("/api/grammar", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sentence: SentenceInput }),
+        body: JSON.stringify({ animal: animalInput }),
       });
 
       const data = await response.json();
@@ -23,7 +23,7 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setSentenceInput("");
+      setAnimalInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -34,23 +34,22 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Grammar Correct</title>
+        <title>OpenAI Quickstart</title>
         <link rel="icon" href="/dog.png" />
       </Head>
 
       <main className={styles.main}>
-        <h3>Grammar correct</h3>
-        <h4>Improve your spelling and grammar by correcting errors in your writing.</h4>
+        <img src="/dog.png" className={styles.icon} />
+        <h3>Name my pet</h3>
         <form onSubmit={onSubmit}>
-          <textarea
+          <input
             type="text"
-            rows={3}
-            name="sentence"
-            placeholder="Enter a sentence"
-            value={SentenceInput}
-            onChange={(e) => setSentenceInput(e.target.value)}
+            name="animal"
+            placeholder="Enter an animal"
+            value={animalInput}
+            onChange={(e) => setAnimalInput(e.target.value)}
           />
-          <input type="submit" value="submit" />
+          <input type="submit" value="Generate names" />
         </form>
         <div className={styles.result}>{result}</div>
       </main>
