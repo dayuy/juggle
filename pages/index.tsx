@@ -43,7 +43,7 @@ export default function Home() {
         <h4>Improve your spelling and grammar by correcting errors in your writing.</h4>
         <form onSubmit={onSubmit}>
           <textarea
-            type="text"
+            // type="text"
             rows={3}
             name="sentence"
             placeholder="Enter a sentence"
